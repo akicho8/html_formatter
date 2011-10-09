@@ -1,0 +1,59 @@
+* HtmlFormatter
+
+HTMLを自分用に整形するライブラリ
+
+* 使い方
+
+** ライブラリとして
+
+p HtmlFormatter.parse("<html></html>") #=> "<html>\n</html>"
+
+** コマンドラインで
+
+$ cat test.html
+<!DOCTYPE html>
+<html lang="ja">
+  <head><meta charset="utf-8" /><title>title</title></head>
+  <body>
+    <h1>
+      title
+    </h1>
+    <div>
+      <p>
+        <img src="rails.png" />
+        <br/>
+        <span>
+          title
+        </span></p><p>あ</p></div>
+  </body>
+</html>
+
+$ html_formatter test.html
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>title</title>
+  </head>
+  <body>
+    <h1>title</h1>
+    <div>
+      <p><img src="rails.png" /><br/><span>title</span></p>
+      <p>あ</p>
+    </div>
+  </body>
+</html>
+
+* オリジナル
+
+RubyでHTMLを自動整形する - sdyuki-devel
+http://d.hatena.ne.jp/sdyuki/20071103/1194071945
+
+* Authors
+
+akicho8 (akicho8@gmail.com)
+
+Local Variables: ***
+mode: outline ***
+coding: utf-8-unix ***
+End: ***

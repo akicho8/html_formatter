@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+begin
+  require "html_formatter/cli"
+rescue LoadError
+  require "rubygems"
+  require "html_formatter/cli"
+end
+HtmlFormatter::CLI.execute
