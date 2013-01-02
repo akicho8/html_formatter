@@ -1,6 +1,9 @@
-require "html_formatter/html_formatter"
-require "html_formatter/cli"
-
-class HtmlFormatter
-  VERSION = "1.0.0"
+module HtmlFormatter
+  def self.parse(*args, &block)
+    Parser.parse(*args, &block)
+  end
 end
+
+require_relative "html_formatter/version"
+require_relative "html_formatter/parser"
+require_relative "html_formatter/cli"

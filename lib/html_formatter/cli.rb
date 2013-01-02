@@ -1,18 +1,17 @@
-#!/usr/bin/env ruby
 # -*- coding: utf-8 -*-
 #
 # コマンドライン用
 #
-require "html_formatter/html_formatter"
+require_relative "parser"
 require "optparse"
 require "pathname"
 
-class HtmlFormatter
+module HtmlFormatter
   class CLI
     def self.execute(argv = ARGV)
       options = {}
       oparser = OptionParser.new{|oparser|
-        oparser.on("-c", "簡易タグ対応チェック"){|options[:validate]|}
+        oparser.on("-c", "簡易タグ対応チェック"){|v|options[:validate] = v}
       }
       oparser.parse!(argv)
 
@@ -20,7 +19,7 @@ class HtmlFormatter
       error_count = 0
       argv.each{|fname|
         fname = Pathname(fname).expand_path
-        html_formatter = HtmlFormatter.new(fname.read)
+        html_formatter = Parser.new(fname.read)
         begin
           formated_html = html_formatter.parse
         rescue HtmlFormatter::DepthError => error
@@ -48,8 +47,8 @@ class HtmlFormatter
       end
     end
   end
-end
 
-if __FILE__ == $PROGRAM_NAME
-  HtmlFormatter::CLI.execute
+  if $0 == __FILE__
+    CLI.execute
+  end
 end

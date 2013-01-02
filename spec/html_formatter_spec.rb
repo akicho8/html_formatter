@@ -1,33 +1,34 @@
 # -*- coding: utf-8 -*-
-require File.expand_path(File.join(File.dirname(__FILE__), "spec_helper"))
+require "spec_helper"
 
-describe HtmlFormatter do
-  describe "initialize" do
-    it { HtmlFormatter.new.should be_an_instance_of(HtmlFormatter) }
-    it { HtmlFormatter.new("", {}, &proc{}).should be_an_instance_of(HtmlFormatter) }
-    it { HtmlFormatter.new{|obj|obj.options}.should be_an_instance_of(HtmlFormatter) }
-    it { HtmlFormatter.new("").should be_an_instance_of(HtmlFormatter) }
-  end
+module HtmlFormatter
+  describe Parser do
+    describe "initialize" do
+      it { Parser.new.should be_an_instance_of(Parser) }
+      it { Parser.new("", {}, &proc{}).should be_an_instance_of(Parser) }
+      it { Parser.new{|obj|obj.options}.should be_an_instance_of(Parser) }
+      it { Parser.new("").should be_an_instance_of(Parser) }
+    end
 
-  describe "class_parse" do
-    it { HtmlFormatter.parse("<html></html>").should == "<html>\n</html>" }
-    it { HtmlFormatter.parse("<span>text</span>").should == "<span>text</span>" }
-    it { HtmlFormatter.parse("<div><p>").should == "<div>\n  <p>" }
-    it { HtmlFormatter.parse("<body><div><p>text</p></div><body>").should == "<body>\n  <div>\n    <p>text</p>\n  </div>\n  <body>" }
-    it { HtmlFormatter.parse("1<br />2").should == "1<br />2" }
-    it { HtmlFormatter.parse("1<br>2<br/>3<br />4").should == "1<br>2<br/>3<br />4" }
-    it { HtmlFormatter.parse("1<img src=\"rails.png\" />2").should == "1<img src=\"rails.png\" />2" }
-    it { HtmlFormatter.parse("1<!-- c -->2").should == "1\n<!-- c -->\n2" }
-    it { HtmlFormatter.parse("<!doctype html>").should == "<!doctype html>" }
-    it { HtmlFormatter.parse("<!doctype html><!doctype html>").should == "<!doctype html>\n<!doctype html>" }
-  end
+    describe "class_parse" do
+      it { Parser.parse("<html></html>").should == "<html>\n</html>" }
+      it { Parser.parse("<span>text</span>").should == "<span>text</span>" }
+      it { Parser.parse("<div><p>").should == "<div>\n  <p>" }
+      it { Parser.parse("<body><div><p>text</p></div><body>").should == "<body>\n  <div>\n    <p>text</p>\n  </div>\n  <body>" }
+      it { Parser.parse("1<br />2").should == "1<br />2" }
+      it { Parser.parse("1<br>2<br/>3<br />4").should == "1<br>2<br/>3<br />4" }
+      it { Parser.parse("1<img src=\"rails.png\" />2").should == "1<img src=\"rails.png\" />2" }
+      it { Parser.parse("1<!-- c -->2").should == "1\n<!-- c -->\n2" }
+      it { Parser.parse("<!doctype html>").should == "<!doctype html>" }
+      it { Parser.parse("<!doctype html><!doctype html>").should == "<!doctype html>\n<!doctype html>" }
+    end
 
-  it "run" do
-    HtmlFormatter.run("<div></div>").should == "<div>\n</div>"
-  end
+    it "run" do
+      Parser.run("<div></div>").should == "<div>\n</div>"
+    end
 
-  it "dirty_html" do
-    input = '
+    it "dirty_html" do
+      input = '
 <!DOCTYPE><!DOCTYPE>
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
@@ -44,7 +45,7 @@ describe HtmlFormatter do
   </body>
 </html>
   '
-    excepted = '
+      excepted = '
 <!DOCTYPE>
 <!DOCTYPE>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -73,11 +74,11 @@ describe HtmlFormatter do
   </body>
 </html>
 '.strip
-    HtmlFormatter.parse(input).should == excepted
-  end
+      Parser.parse(input).should == excepted
+    end
 
-  it "script" do
-    input = '
+    it "script" do
+      input = '
 <!doctype html>
 <html>
   <head>
@@ -100,7 +101,7 @@ describe HtmlFormatter do
   </body>
 </html>
   '
-    excepted = '
+      excepted = '
 <!doctype html>
 <html>
   <head>
@@ -123,6 +124,7 @@ describe HtmlFormatter do
   </body>
 </html>
 '.strip
-    HtmlFormatter.parse(input, :html_pack => false).should == excepted
+      Parser.parse(input, :html_pack => false).should == excepted
+    end
   end
 end
