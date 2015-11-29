@@ -23,10 +23,6 @@ module HtmlFormatter
       new(source, options, &block).parse
     end
 
-    class << self
-      alias run parse
-    end
-
     #
     # 余計なスペースと改行を全削除
     #
