@@ -17,5 +17,6 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--line-numbers", "--inline-source", "--charset=UTF-8", "--diagram", "--image-format=jpg"]
 
   s.add_dependency "activesupport"
+  s.add_development_dependency "rake"
   s.add_development_dependency "rspec"
 end

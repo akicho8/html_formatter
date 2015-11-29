@@ -1,9 +1,2 @@
-source :rubygems
+source 'https://rubygems.org'
 gemspec
-
-group :test do
-end
-
-gem "rspec"
-gem "tapp"
-gem "pry-debugger"
