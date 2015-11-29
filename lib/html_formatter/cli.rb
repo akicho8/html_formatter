@@ -9,7 +9,7 @@ require "html_formatter/parser"
 
 module HtmlFormatter
   class CLI
-    def self.execute(argv = ARGV)
+    def self.execute(argv)
       options = {}
       oparser = OptionParser.new do |oparser|
         oparser.on("-c", "簡易タグ対応チェック") { |v|
