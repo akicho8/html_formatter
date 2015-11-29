@@ -1,4 +1,4 @@
-README.html
-TAGS
-*.gem
-Gemfile.lock
+/README.html
+/TAGS
+/*.gem
+/Gemfile.lock

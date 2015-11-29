@@ -3,35 +3,41 @@
 
 * HTML自動整形ライブラリ
 
-  ごちゃごちゃなHTMLを、
+  インデントがあやふやなHTMLを、
 
-  : $ cat test.html
-  : <html><head><title>hello</title></head><body>world</body></html>
+#+BEGIN_SRC shell
+$ cat test.html
+<html><head><title>hello</title></head><body>world</body></html>
+#+END_SRC
 
-  インデント付きに変換
+  インデント付きに変換する。
 
-  : $ html_formatter test.html
-  : <html>
-  :   <head>
-  :     <title>hello</title>
-  :   </head>
-  :   <body>
-  :     world
-  :   </body>
-  : </html>
+#+BEGIN_SRC shell  
+$ html_formatter test.html
+<html>
+  <head>
+    <title>hello</title>
+  </head>
+  <body>
+    world
+  </body>
+</html>
+#+END_SRC
 
-  ライブラリとして使う場合
+  ライブラリとして使う例
 
-  : require "html_formatter"
-  : puts HtmlFormatter.parse("<html><head><title>hello</title></head><body>world</body></html>")
-  : # >> <html>
-  : # >>   <head>
-  : # >>     <title>hello</title>
-  : # >>   </head>
-  : # >>   <body>
-  : # >>     world
-  : # >>   </body>
-  : # >> </html>
+#+BEGIN_SRC ruby
+require "html_formatter"
+puts HtmlFormatter.parse("<html><head><title>hello</title></head><body>world</body></html>")
+# >> <html>
+# >>   <head>
+# >>     <title>hello</title>
+# >>   </head>
+# >>   <body>
+# >>     world
+# >>   </body>
+# >> </html>
+#+END_SRC
 
 ** オリジナル
 

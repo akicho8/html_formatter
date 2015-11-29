@@ -2,22 +2,25 @@
 #
 # コマンドライン用
 #
-require_relative "parser"
 require "optparse"
 require "pathname"
+
+require "html_formatter/parser"
 
 module HtmlFormatter
   class CLI
     def self.execute(argv = ARGV)
       options = {}
-      oparser = OptionParser.new{|oparser|
-        oparser.on("-c", "簡易タグ対応チェック"){|v|options[:validate] = v}
-      }
+      oparser = OptionParser.new do |oparser|
+        oparser.on("-c", "簡易タグ対応チェック") { |v|
+          options[:validate] = v
+        }
+      end
       oparser.parse!(argv)
 
       ok_count = 0
       error_count = 0
-      argv.each{|fname|
+      argv.each do |fname|
         fname = Pathname(fname).expand_path
         html_formatter = Parser.new(fname.read)
         begin
@@ -41,14 +44,14 @@ module HtmlFormatter
             puts formated_html
           end
         end
-      }
+      end
       if options[:validate] || error_count.nonzero?
         p [:ok_count, ok_count, :error_count, error_count]
       end
     end
   end
+end
 
-  if $0 == __FILE__
-    CLI.execute
-  end
+if $0 == __FILE__
+  HtmlFormatter::CLI.execute
 end

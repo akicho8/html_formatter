@@ -7,6 +7,10 @@ require "active_support/core_ext/string"
 require "strscan"
 
 module HtmlFormatter
+  def self.parse(*args, &block)
+    Parser.parse(*args, &block)
+  end
+
   class Parser
     class DepthError < StandardError; end
 
@@ -183,17 +187,18 @@ module HtmlFormatter
       @body << str.to_s
     end
   end
+end
 
-  if $0 == __FILE__
-    # puts Parser.parse("<li>X</li>")
-    # puts Parser.parse("<li><a href='x'><sup>X</sup></a></li>")
-    # puts Parser.parse("<a href='x'><sup>X</sup></a>")
-    # puts Parser.parse("<a><sup>X</sup></a>")
-    # puts Parser.parse("<div id='main'>S<a><span>X</span>A<meta/>B</a>A<!-- X -->B</div>")
-    # puts Parser.parse("<head><title>X</title><link a='1' /></head>")
-    # puts Parser.parse("A<p>B<sup>C<meta/>D</sup>E</p>F")
-    # puts Parser.parse("<!DOCTYPE>a<html>b<head>c</head>d</html>e")
-    source = '
+if $0 == __FILE__
+  # puts Parser.parse("<li>X</li>")
+  # puts Parser.parse("<li><a href='x'><sup>X</sup></a></li>")
+  # puts Parser.parse("<a href='x'><sup>X</sup></a>")
+  # puts Parser.parse("<a><sup>X</sup></a>")
+  # puts Parser.parse("<div id='main'>S<a><span>X</span>A<meta/>B</a>A<!-- X -->B</div>")
+  # puts Parser.parse("<head><title>X</title><link a='1' /></head>")
+  # puts Parser.parse("A<p>B<sup>C<meta/>D</sup>E</p>F")
+  # puts Parser.parse("<!DOCTYPE>a<html>b<head>c</head>d</html>e")
+  source = '
     <script type="text/javascript">
       //<![CDATA[
         "a
@@ -202,6 +207,5 @@ module HtmlFormatter
       //]]>
     </script>
   '
-    puts Parser.parse(source, :trace => true, :html_pack => false)
-  end
+  puts HtmlFormatter::Parser.parse(source, :trace => true, :html_pack => false)
 end
