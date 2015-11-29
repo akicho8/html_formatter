@@ -1,31 +1,26 @@
 # -*- coding: utf-8 -*-
 require "spec_helper"
 
-module HtmlFormatter
-  describe Parser do
-    describe "initialize" do
-      it { Parser.new.should be_an_instance_of(Parser) }
-      it { Parser.new("", {}, &proc{}).should be_an_instance_of(Parser) }
-      it { Parser.new{|obj|obj.options}.should be_an_instance_of(Parser) }
-      it { Parser.new("").should be_an_instance_of(Parser) }
-    end
+RSpec.describe HtmlFormatter::Parser do
+  describe "new" do
+    it { HtmlFormatter::Parser.new.should be_an_instance_of(HtmlFormatter::Parser) }
+    it { HtmlFormatter::Parser.new("", {}, &proc{}).should be_an_instance_of(HtmlFormatter::Parser) }
+    it { HtmlFormatter::Parser.new{|obj|obj.options}.should be_an_instance_of(HtmlFormatter::Parser) }
+    it { HtmlFormatter::Parser.new("").should be_an_instance_of(HtmlFormatter::Parser) }
+  end
 
-    describe "class_parse" do
-      it { Parser.parse("<html></html>").should == "<html>\n</html>" }
-      it { Parser.parse("<span>text</span>").should == "<span>text</span>" }
-      it { Parser.parse("<div><p>").should == "<div>\n  <p>" }
-      it { Parser.parse("<body><div><p>text</p></div><body>").should == "<body>\n  <div>\n    <p>text</p>\n  </div>\n  <body>" }
-      it { Parser.parse("1<br />2").should == "1<br />2" }
-      it { Parser.parse("1<br>2<br/>3<br />4").should == "1<br>2<br/>3<br />4" }
-      it { Parser.parse("1<img src=\"rails.png\" />2").should == "1<img src=\"rails.png\" />2" }
-      it { Parser.parse("1<!-- c -->2").should == "1\n<!-- c -->\n2" }
-      it { Parser.parse("<!doctype html>").should == "<!doctype html>" }
-      it { Parser.parse("<!doctype html><!doctype html>").should == "<!doctype html>\n<!doctype html>" }
-    end
-
-    it "run" do
-      Parser.run("<div></div>").should == "<div>\n</div>"
-    end
+  describe "parse" do
+    it { HtmlFormatter::Parser.parse("<div></div>").should == "<div>\n</div>" }
+    it { HtmlFormatter::Parser.parse("<html></html>").should == "<html>\n</html>" }
+    it { HtmlFormatter::Parser.parse("<span>text</span>").should == "<span>text</span>" }
+    it { HtmlFormatter::Parser.parse("<div><p>").should == "<div>\n  <p>" }
+    it { HtmlFormatter::Parser.parse("<body><div><p>text</p></div><body>").should == "<body>\n  <div>\n    <p>text</p>\n  </div>\n  <body>" }
+    it { HtmlFormatter::Parser.parse("1<br />2").should == "1<br />2" }
+    it { HtmlFormatter::Parser.parse("1<br>2<br/>3<br />4").should == "1<br>2<br/>3<br />4" }
+    it { HtmlFormatter::Parser.parse("1<img src=\"rails.png\" />2").should == "1<img src=\"rails.png\" />2" }
+    it { HtmlFormatter::Parser.parse("1<!-- c -->2").should == "1\n<!-- c -->\n2" }
+    it { HtmlFormatter::Parser.parse("<!doctype html>").should == "<!doctype html>" }
+    it { HtmlFormatter::Parser.parse("<!doctype html><!doctype html>").should == "<!doctype html>\n<!doctype html>" }
 
     it "dirty_html" do
       input = '
@@ -74,7 +69,7 @@ module HtmlFormatter
   </body>
 </html>
 '.strip
-      Parser.parse(input).should == excepted
+      HtmlFormatter::Parser.parse(input).should == excepted
     end
 
     it "script" do
@@ -124,7 +119,7 @@ module HtmlFormatter
   </body>
 </html>
 '.strip
-      Parser.parse(input, :html_pack => false).should == excepted
+      HtmlFormatter::Parser.parse(input, :html_pack => false).should == excepted
     end
   end
 end
