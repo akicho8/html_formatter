@@ -46,7 +46,7 @@ module HtmlFormatter
         end
       end
       if options[:validate] || error_count.nonzero?
-        p [:ok_count, ok_count, :error_count, error_count]
+        puts "ok: #{ok_count}, error: #{error_count}"
       end
     end
   end
